@@ -1,88 +1,90 @@
 # Clean Code PHP
 
-## Table of Contents
+これは、[clean-code-php](https://github.com/yangweijie/clean-code-php)を日本語訳したものです。翻訳内容に不備があったり、無効なリンクなどがある場合には、issueあるいは、PRをお願いいたします。
 
-  1. [Introduction](#introduction)
-  2. [Variables](#variables)
-     * [Use meaningful and pronounceable variable names](#use-meaningful-and-pronounceable-variable-names)
-     * [Use the same vocabulary for the same type of variable](#use-the-same-vocabulary-for-the-same-type-of-variable)
-     * [Use searchable names (part 1)](#use-searchable-names-part-1)
-     * [Use searchable names (part 2)](#use-searchable-names-part-2)
-     * [Use explanatory variables](#use-explanatory-variables)
-     * [Avoid nesting too deeply and return early (part 1)](#avoid-nesting-too-deeply-and-return-early-part-1)
-     * [Avoid nesting too deeply and return early (part 2)](#avoid-nesting-too-deeply-and-return-early-part-2)
-     * [Avoid Mental Mapping](#avoid-mental-mapping)
-     * [Don't add unneeded context](#dont-add-unneeded-context)
-  3. [Comparison](#comparison)
-     * [Use identical comparison](#use-identical-comparison)
-     * [Null coalescing operator](#null-coalescing-operator)
-  4. [Functions](#functions)
-     * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
-     * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
-     * [Function names should say what they do](#function-names-should-say-what-they-do)
-     * [Functions should only be one level of abstraction](#functions-should-only-be-one-level-of-abstraction)
-     * [Don't use flags as function parameters](#dont-use-flags-as-function-parameters)
-     * [Avoid Side Effects](#avoid-side-effects)
-     * [Don't write to global functions](#dont-write-to-global-functions)
-     * [Don't use a Singleton pattern](#dont-use-a-singleton-pattern)
-     * [Encapsulate conditionals](#encapsulate-conditionals)
-     * [Avoid negative conditionals](#avoid-negative-conditionals)
-     * [Avoid conditionals](#avoid-conditionals)
-     * [Avoid type-checking (part 1)](#avoid-type-checking-part-1)
-     * [Avoid type-checking (part 2)](#avoid-type-checking-part-2)
-     * [Remove dead code](#remove-dead-code)
-  5. [Objects and Data Structures](#objects-and-data-structures)
-     * [Use object encapsulation](#use-object-encapsulation)
-     * [Make objects have private/protected members](#make-objects-have-privateprotected-members)
-  6. [Classes](#classes)
-     * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
-     * [Avoid fluent interfaces](#avoid-fluent-interfaces)
-     * [Prefer final classes](#prefer-final-classes)
-  7. [SOLID](#solid)
-     * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
-     * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
-     * [Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
-     * [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
-     * [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
-  8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
-  9. [Translations](#translations)
+## 目次
 
-## Introduction
+  1. [はじめに](#はじめに)
+  2. [変数](#変数)
+     * [意味があり、発音可能な変数名を使用する](#意味があり、発音可能な変数名を使用する)
+     * [同じタイプの変数には同じ語彙を使用する](#同じタイプの変数には同じ語彙を使用する)
+     * [検索可能な名前を使用する(パート1)](#検索可能な名前を使用する-パート1)
+     * [検索可能な名前を使用する(パート2)](#検索可能な名前を使用する-パート2)
+     * [理解に役立つ変数を使用する](#理解に役立つ変数を使用する)
+     * [深いネストを避けて、早期リターンを使用する(パート1)](#深いネストを避けて、早期リターンを使用する-パート1)
+     * [深いネストを避けて、早期リターンを使用する(パート2)](#深いネストを避けて、早期リターンを使用する-パート2)
+     * [メンタルマッピングを避ける](#メンタルマッピングを避ける)
+     * [不要なコンテキストを避ける](#不要なコンテキストを避ける)
+  3. [比較](#比較)
+     * [厳密な比較を使用する](#厳密な比較を使用する)
+     * [Null合体演算子](#Null合体演算子)
+  4. [関数](#関数)
+     * [短絡または条件の代わりにデフォルトの引数を使用する](#短絡または条件の代わりにデフォルトの引数を使用する)
+     * [関数の引数 (2つ以下の引数が理想的)](#関数の引数-2つ以下の引数が理想的)
+     * [関数名は何の処理を実行するかわかるようにする](#関数名は何の処理を実行するかわかるようにする)
+     * [関数は1段階の抽象化のみにする](#関数は1段階の抽象化のみにする)
+     * [関数の引数としてフラグを使用しない](#関数の引数としてフラグを使用しない)
+     * [副作用を避ける](#副作用を避ける)
+     * [グローバル関数に書き込まない](#グローバル関数に書き込まない)
+     * [シングルトンパターンを使用しない](#シングルトンパターンを使用しない)
+     * [条件文をカプセル化する](#条件文をカプセル化する)
+     * [否定の条件文を避ける](#否定の条件文を避ける)
+     * [条件文を避ける](#条件文を避ける)
+     * [型チェックを避ける(パート1)](#型チェックを避ける-パート1)
+     * [型チェックを避ける(パート2)](#型チェックを避ける-パート2)
+     * [必要のないコードは取り除く](#必要のないコードは取り除く)
+  5. [オブジェクトとデータ構造](#オブジェクトとデータ構造)
+     * [オブジェクトのカプセル化を使用する](#オブジェクトのカプセル化を使用する)
+     * [private/protectedなメンバーを持つオブジェクトを作成する](#private/protectedなメンバーを持つオブジェクトを作成する)
+  6. [クラス](#クラス)
+     * [継承よりコンポジションを優先する](#継承よりコンポジションを優先する)
+     * [流れるようなインターフェイスを避ける](#流れるようなインターフェイスを避ける)
+     * [finalクラスを優先する](#finalクラスを優先する)
+  7. [SOLID原則](#SOLID原則)
+     * [単一責任原則(SRP)](#単一責任原則-srp)
+     * [オープン・クローズドの原則(OCP)](#オープン・クローズドの原則-OCP)
+     * [リスコフの置換原則(LSP)](#リスコフの置換原則-LSP)
+     * [インターフェイス分離の原則(ISP)](#インターフェイス分離の原則-ISP)
+     * [依存性逆転の原則(DIP)](#依存性逆転の原則-DIP)
+  8. [DRY原則(DRY)](#DRY原則-DRY)
+  9.  [翻訳](#翻訳)
 
-Software engineering principles, from Robert C. Martin's book
-[*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
-adapted for PHP. This is not a style guide. It's a guide to producing
-readable, reusable, and refactorable software in PHP.
+## はじめに
 
-Not every principle herein has to be strictly followed, and even fewer will be universally
-agreed upon. These are guidelines and nothing more, but they are ones codified over many
-years of collective experience by the authors of *Clean Code*.
+Robert C. Martinの著書である[*クリーンコード*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
+のソフトウェア・エンジニアリングの原則をPHPに適用させたものです。
 
-Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
+これはスタイルガイドではありません。リーダブルで再利用しやすく、リファクタリングを行いやすいソフトウェアをPHPで創り出すためのガイドです。
 
-Although many developers still use PHP 5, most of the examples in this article only work with PHP 7.1+.
+ここに書かれている全ての原則に厳密に従う必要はありませんし、常に従う必要のある原則は、さらに少ないです。
 
-## Variables
+これらはガイドラインであり、それ以上のものではありませんが、*Clean Code*の著者による長年の集合的な経験から成分化されたものです。
 
-### Use meaningful and pronounceable variable names
+[clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)からインスピレーションを得ています。
 
-**Bad:**
+多くの開発者はまだPHP5を使用していますが、この記事のほとんどの例はPHP7.1以降でのみ機能します。
+
+## 変数
+
+### 意味があり、発音可能な変数名を使用する
+
+**悪い例:**
 
 ```php
 $ymdstr = $moment->format('y-m-d');
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 $currentDate = $moment->format('y-m-d');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Use the same vocabulary for the same type of variable
+### 同じタイプの変数には同じ語彙を使用する
 
-**Bad:**
+**悪い例:**
 
 ```php
 getUserInfo();
@@ -91,55 +93,55 @@ getUserRecord();
 getUserProfile();
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 getUser();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Use searchable names (part 1)
+### 検索可能な名前を使用する (パート1)
 
-We will read more code than we will ever write. It's important that the code we do write is
-readable and searchable. By *not* naming variables that end up being meaningful for
-understanding our program, we hurt our readers.
-Make your names searchable.
+これまで書いてきたコード以上に多くのコードを読みます。そのため、あなたが書くコードは読みやすく、検索可能であることが大切です。
 
-**Bad:**
+プログラムを理解するのに重要な変数名に適切な命名をしないことで、読みづらいコードになってしまいます。
+変数名は、検索可能なものにしてください。
+
+**悪い例:**
 
 ```php
-// What the heck is 448 for?
+// 448は何を表してるんだ？
 $result = $serializer->serialize($data, 448);
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 $json = $serializer->serialize($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ```
 
-### Use searchable names (part 2)
+### 検索可能な名前を使用する (パート2)
 
-**Bad:**
+**悪い例:**
 
 ```php
 class User
 {
-    // What the heck is 7 for?
+    // 7は何を表してるんだ？
     public $access = 7;
 }
 
-// What the heck is 4 for?
+// 4は何を表してるんだ？
 if ($user->access & 4) {
     // ...
 }
 
-// What's going on here?
+// これは何をしている？
 $user->access ^= 2;
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 class User
@@ -152,23 +154,23 @@ class User
 
     public const ACCESS_DELETE = 8;
 
-    // User as default can read, create and update something
+    // デフォルトのUserには、read, create, updateの権限を持つ
     public $access = self::ACCESS_READ | self::ACCESS_CREATE | self::ACCESS_UPDATE;
 }
 
 if ($user->access & User::ACCESS_UPDATE) {
-    // do edit ...
+    // 処理を書く
 }
 
-// Deny access rights to create something
+// create権限を持たない
 $user->access ^= User::ACCESS_CREATE;
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Use explanatory variables
+### 理解に役立つ変数を使用する
 
-**Bad:**
+**悪い例:**
 
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
@@ -178,9 +180,9 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches[1], $matches[2]);
 ```
 
-**Not bad:**
+**悪くない例:**
 
-It's better, but we are still heavily dependent on regex.
+以下はよりよい例ですが、それでも正規表現に大きく依存しています。
 
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
@@ -191,9 +193,9 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($city, $zipCode);
 ```
 
-**Good:**
+**良い例:**
 
-Decrease dependence on regex by naming subpatterns.
+[サブパターン](https://www.php.net/manual/ja/regexp.reference.subpatterns.php)に名前をつけることで正規表現への依存を減らせます。
 
 ```php
 $address = 'One Infinite Loop, Cupertino 95014';
@@ -203,14 +205,13 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Avoid nesting too deeply and return early (part 1)
+### 深いネストを避けて、早期リターンを使用する (パート1)
 
-Too many if-else statements can make your code hard to follow. Explicit is better
-than implicit.
+if-elseステートメントが多すぎると、読みづらいコードになることがあります。明瞭であることは、不明瞭であることより良いです。
 
-**Bad:**
+**悪い例:**
 
 ```php
 function isShopOpen($day): bool
@@ -233,7 +234,7 @@ function isShopOpen($day): bool
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 function isShopOpen(string $day): bool
@@ -248,11 +249,11 @@ function isShopOpen(string $day): bool
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Avoid nesting too deeply and return early (part 2)
+### 深いネストを避けて、早期リターンを使用する (パート2)
 
-**Bad:**
+**悪い例:**
 
 ```php
 function fibonacci(int $n)
@@ -270,7 +271,7 @@ function fibonacci(int $n)
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 function fibonacci(int $n): int
@@ -287,14 +288,14 @@ function fibonacci(int $n): int
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Avoid Mental Mapping
+### メンタルマッピングを避ける
 
-Don’t force the reader of your code to translate what the variable means.
-Explicit is better than implicit.
+コードを読む人に変数の意味を翻訳することを強制してはいけません。
+明瞭であることは、不明瞭であることより良いです。
 
-**Bad:**
+**悪い例:**
 
 ```php
 $l = ['Austin', 'New York', 'San Francisco'];
@@ -306,12 +307,12 @@ for ($i = 0; $i < count($l); $i++) {
     // ...
     // ...
     // ...
-    // Wait, what is `$li` for again?
+    // $liは何を表してたんだっけ
     dispatch($li);
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 $locations = ['Austin', 'New York', 'San Francisco'];
@@ -326,14 +327,13 @@ foreach ($locations as $location) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Don't add unneeded context
+### 不要なコンテキストを避ける
 
-If your class/object name tells you something, don't repeat that in your
-variable name.
+クラス名やオブジェクト名が教えてくれることを、変数名で繰り返す必要はありません。
 
-**Bad:**
+**悪い例:**
 
 ```php
 class Car
@@ -348,7 +348,7 @@ class Car
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 class Car
@@ -363,50 +363,54 @@ class Car
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-## Comparison
+## 比較
 
-### Use [identical comparison](http://php.net/manual/en/language.operators.comparison.php)
+### 厳密な比較を使用する
 
-**Not good:**
+[厳密な比較](https://www.php.net/manual/ja/language.operators.comparison.php)を使用してください。
 
-The simple comparison will convert the string in an integer.
+**良くない例:**
+
+単純な比較(緩やかな比較、曖昧な比較)では、文字列型を整数型に変換します。
 
 ```php
 $a = '42';
 $b = 42;
 
 if ($a != $b) {
-    // The expression will always pass
+    // この式は常にスキップされます
 }
 ```
 
-The comparison `$a != $b` returns `FALSE` but in fact it's `TRUE`!
-The string `42` is different than the integer `42`.
+`$a != $b`という比較は、`FALSE`を返しますが、実際には`TRUE`です!
+文字列`42` は、整数値`42`とは異なります。
 
-**Good:**
+**良い例:**
 
-The identical comparison will compare type and value.
+厳密な比較では、型と値がともに比較されます。
 
 ```php
 $a = '42';
 $b = 42;
 
 if ($a !== $b) {
-    // The expression is verified
+    // この式は実行されます
 }
 ```
 
-The comparison `$a !== $b` returns `TRUE`.
+`$a !== $b`という比較は、`TRUE`を返します。
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Null coalescing operator
+### Null合体演算子
 
-Null coalescing is a new operator [introduced in PHP 7](https://www.php.net/manual/en/migration70.new-features.php). The null coalescing operator `??` has been added as syntactic sugar for the common case of needing to use a ternary in conjunction with `isset()`. It returns its first operand if it exists and is not `null`; otherwise it returns its second operand.
+Null合体演算子は、[PHP7から導入された新しい演算子](https://www.php.net/manual/ja/migration70.new-features.php)です。
+Null合体演算子`??`は、`isset()`と組み合わせて三項演算子を使用する必要がある一般的なケースの[糖衣構文](https://ja.wikipedia.org/wiki/%E7%B3%96%E8%A1%A3%E6%A7%8B%E6%96%87)として追加されました。Null合体演算子を使用すると、最初のオペランドが`null`でない場合にはそれを返します。`null`だった場合には、2番目のオペランドを返します。
 
-**Bad:**
+
+**悪い例:**
 
 ```php
 if (isset($_GET['name'])) {
@@ -418,20 +422,20 @@ if (isset($_GET['name'])) {
 }
 ```
 
-**Good:**
+**良い例:**
 ```php
 $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-## Functions
+## 関数
 
-### Use default arguments instead of short circuiting or conditionals
+### 短絡または条件の代わりにデフォルトの引数を使用する
 
-**Not good:**
+**良くない例:**
 
-This is not good because `$breweryName` can be `NULL`.
+`$breweryName`は`NULL`になる可能性があるため、これは適切ではありません。
 
 ```php
 function createMicrobrewery($breweryName = 'Hipster Brew Co.'): void
@@ -440,21 +444,22 @@ function createMicrobrewery($breweryName = 'Hipster Brew Co.'): void
 }
 ```
 
-**Not bad:**
+**悪くない例:**
 
+この例は、先程の例よりも理解しやすいですが、変数の値を制御するほうがよいです。
 This opinion is more understandable than the previous version, but it better controls the value of the variable.
 
 ```php
 function createMicrobrewery($name = null): void
 {
-    $breweryName = $name ?: 'Hipster Brew Co.';
+    $breweryName = $name ?: 'Hipster Brew Co.'; // `?:` はエルビス演算子
     // ...
 }
 ```
 
-**Good:**
+**良い例:**
 
- You can use [type hinting](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) and be sure that the `$breweryName` will not be `NULL`.
+ [型宣言(タイプヒンティング)](https://www.php.net/manual/ja/language.types.declarations.php) を使用して、`$breweryName`が`NULL`にならないようにすることができます。
 
 ```php
 function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
@@ -463,20 +468,17 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Function arguments (2 or fewer ideally)
+### 関数の引数 (2つ以下の引数が理想的)
 
-Limiting the amount of function parameters is incredibly important because it makes
-testing your function easier. Having more than three leads to a combinatorial explosion
-where you have to test tons of different cases with each separate argument.
+関数の引数の数を制限することは、非常に重要です。そうすることで、関数のテストが簡単になります。3つ以上の引数があると組み合わせの数が大きく増え、それぞれの引数に対する様々なケースをテストする必要がでてきます。
 
-Zero arguments is the ideal case. One or two arguments is ok, and three should be avoided.
-Anything more than that should be consolidated. Usually, if you have more than two
-arguments then your function is trying to do too much. In cases where it's not, most
-of the time a higher-level object will suffice as an argument.
+引数がないのが理想です。1つか2つであれば問題有りませんが、3つは避けた方がよいでしょう。
+それ以上増える場合には、統合する必要があります。通常、2つより多い引数を指定する場合、その関数は多くのことを実行しようとしています。
+そうでない場合、より高次のオブジェクトを引数とすることで事足りる場合も多くあります。
 
-**Bad:**
+**悪い例:**
 
 ```php
 class Questionnaire
@@ -496,7 +498,7 @@ class Questionnaire
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 class Name
@@ -559,11 +561,11 @@ class Questionnaire
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Function names should say what they do
+### 関数名は何の処理を実行するかわかるようにする
 
-**Bad:**
+**悪い例:**
 
 ```php
 class Email
@@ -577,11 +579,11 @@ class Email
 }
 
 $message = new Email(...);
-// What is this? A handle for the message? Are we writing to a file now?
+// これは何を実行しているんだろう？ メッセージのハンドリング？ ファイル書き込みを行っているのだろうか？
 $message->handle();
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 class Email
@@ -595,19 +597,18 @@ class Email
 }
 
 $message = new Email(...);
-// Clear and obvious
+// わかりやすい
 $message->send();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Functions should only be one level of abstraction
+### 関数は1段階の抽象化のみにする
 
-When you have more than one level of abstraction your function is usually
-doing too much. Splitting up functions leads to reusability and easier
-testing.
+複数段階の抽象化がある場合、関数は通常、多くのことをやりすぎています。
+関数を機能ごとに分解することで、再利用性の向上やよりテストしやすいコードになります。
 
-**Bad:**
+**悪い例:**
 
 ```php
 function parseBetterPHPAlternative(string $code): void
@@ -635,9 +636,9 @@ function parseBetterPHPAlternative(string $code): void
 }
 ```
 
-**Bad too:**
+**同じく悪い例:**
 
-We have carried out some of the functionality, but the `parseBetterPHPAlternative()` function is still very complex and not testable.
+関数を分割していますが、`parseBetterPHPAlternative()`関数は、まだとても複雑で、テストしやすいものではありません。
 
 ```php
 function tokenize(string $code): array
@@ -669,6 +670,7 @@ function lexer(array $tokens): array
 
 function parseBetterPHPAlternative(string $code): void
 {
+    // `parseBetterPHPAlternative()`関数内で、それぞれの関数が実行されてしまっている
     $tokens = tokenize($code);
     $ast = lexer($tokens);
     foreach ($ast as $node) {
@@ -677,9 +679,9 @@ function parseBetterPHPAlternative(string $code): void
 }
 ```
 
-**Good:**
+**良い例:**
 
-The best solution is move out the dependencies of `parseBetterPHPAlternative()` function.
+最善の解決策は、`parseBetterPHPAlternative()`関数の依存関係を取り除くことです。
 
 ```php
 class Tokenizer
@@ -737,15 +739,13 @@ class BetterPHPAlternative
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Don't use flags as function parameters
+### 関数の引数として、フラグを使用しない
 
-Flags tell your user that this function does more than one thing. Functions should
-do one thing. Split out your functions if they are following different code paths
-based on a boolean.
+フラグは、関数が複数のことを実行することをユーザーに伝えます。1つの関数は1つのことを実行すべきです。ブール値に基づいて、実行内容が異なって来る場合には、関数を分割しましょう。
 
-**Bad:**
+**悪い例:**
 
 ```php
 function createFile(string $name, bool $temp = false): void
@@ -758,7 +758,7 @@ function createFile(string $name, bool $temp = false): void
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 function createFile(string $name): void
@@ -772,29 +772,29 @@ function createTempFile(string $name): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Avoid Side Effects
+### 副作用を避ける
 
-A function produces a side effect if it does anything other than take a value in and
-return another value or values. A side effect could be writing to a file, modifying
-some global variable, or accidentally wiring all your money to a stranger.
+関数は、値を受け取り、他の値を返す以外のことを行うと、副作用を引き起こします。副作用として、ファイルへの書き込み、グローバル変数の変更、または誤って赤の他人にあなたのお金を送金するなどのことが考えられます。
 
-Now, you do need to have side effects in a program on occasion. Like the previous
-example, you might need to write to a file. What you want to do is to centralize where
-you are doing this. Don't have several functions and classes that write to a particular
-file. Have one service that does it. One and only one.
+プログラムには副作用が時々必要です。上の例のように、ファイルへの書き込みが必要になる場合があります。したいことは、副作用の起こるプログラムを一元化することです。
 
-The main point is to avoid common pitfalls like sharing state between objects without
-any structure, using mutable data types that can be written to by anything, and not
-centralizing where your side effects occur. If you can do this, you will be happier
-than the vast majority of other programmers.
+特定のファイルに書き込む関数や、クラスをいくつも用意してはいけません。それを行うサービスは1つだけにすべきです。ただ1つです。
 
-**Bad:**
+重要な点は、次に挙げるような一般的な落とし穴を避けることです。
+
+- 構造のないオブジェクト間で状態を共有すること
+- 何でも書き込める可変データ型を使用すること
+- 副作用が派生する場所を一元化しないこと
+
+これができれば、他の大多数のプログラマーより幸せになれます。
+
+**悪い例:**
 
 ```php
-// Global variable referenced by following function.
-// If we had another function that used this name, now it'd be an array and it could break it.
+// 次の関数によって参照されるグローバル変数
+// このname変数を医療する他の関数がある場合、これは配列になり、動作しな可能性があります。
 $name = 'Ryan McDermott';
 
 function splitIntoFirstAndLastName(): void
@@ -810,7 +810,7 @@ var_dump($name);
 // ['Ryan', 'McDermott'];
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 function splitIntoFirstAndLastName(string $name): array
@@ -828,17 +828,16 @@ var_dump($newName);
 // ['Ryan', 'McDermott'];
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Don't write to global functions
+### グローバル関数に書き込まない
 
-Polluting globals is a bad practice in many languages because you could clash with another
-library and the user of your API would be none-the-wiser until they get an exception in
-production. Let's think about an example: what if you wanted to have configuration array?
-You could write global function like `config()`, but it could clash with another library
-that tried to do the same thing.
+グローバルスコープを汚染することは、多くの言語で悪い習慣です。なぜなら、他のライブラリと衝突する可能性があり、APIのユーザーは、本番環境で例外が発生するまでわかりらないためです。
 
-**Bad:**
+設定状態をもつ配列が必要な場合について考えてみましょう。
+`config（）`のようなグローバル関数を書くこともできますが、同じことをしようとした別のライブラリと衝突する可能性があります。
+
+**悪い例:**
 
 ```php
 function config(): array
@@ -849,7 +848,7 @@ function config(): array
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 class Configuration
@@ -869,7 +868,7 @@ class Configuration
 }
 ```
 
-Load configuration and create instance of `Configuration` class
+設定を読み込み、`Configuration`のインスタンスを生成します。
 
 ```php
 $configuration = new Configuration([
@@ -877,21 +876,22 @@ $configuration = new Configuration([
 ]);
 ```
 
-And now you must use instance of `Configuration` in your application.
+そして今、アプリケーションで `Configuration`のインスタンスを使わなければなりません。
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Don't use a Singleton pattern
+### シングルトンパターンを使用しない
 
-Singleton is an [anti-pattern](https://en.wikipedia.org/wiki/Singleton_pattern). Paraphrased from Brian Button:
- 1. They are generally used as a **global instance**, why is that so bad? Because **you hide the dependencies** of your application in your code, instead of exposing them through the interfaces. Making something global to avoid passing it around is a [code smell](https://en.wikipedia.org/wiki/Code_smell).
- 2. They violate the [single responsibility principle](#single-responsibility-principle-srp): by virtue of the fact that **they control their own creation and lifecycle**.
- 3. They inherently cause code to be tightly [coupled](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29). This makes faking them out under **test rather difficult** in many cases.
- 4. They carry state around for the lifetime of the application. Another hit to testing since **you can end up with a situation where tests need to be ordered** which is a big no for unit tests. Why? Because each unit test should be independent from the other.
+シングルトンは、[アンチパターン](https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%B3%E3%83%81%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3)です。
+Brian Buttonから言い換えると、
+ 1. シングルトンは、一般的に**グローバル変数**として使用されますが、なぜそれほど悪いのですか？なぜなら、インターフェイスを介してそれらを公開するのではなく、コード内でアプリケーションの**依存関係を隠してしまう**からです。あるデータをあちこちに渡すのを避けるためにグローバルにすることは、[コードの臭い](https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE%E8%87%AD%E3%81%84)です。
+ 2. **自身のインスタンスの生成とライフサイクルを制御する**点から、[単一責任原則](#単一責任原則)に違反します。
+ 3. 本質的にコードの密結合を引き起こします。([結合度](https://ja.wikipedia.org/wiki/%E7%B5%90%E5%90%88%E5%BA%A6))これにより多くのケースで、**テスト時に仮のデータを用意するのが大変**になります。
+ 4. アプリケーションの寿命が尽きるまで、状態を持ち続けることになります。また、単体テストと相性の悪い**テストを順番に行う必要があるという状況に陥る可能性**があるためテストに影響があります。なぜなら、各単体テストは、互いに独立している必要があるためです。
 
-There is also very good thoughts by [Misko Hevery](http://misko.hevery.com/about/) about the [root of problem](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/).
+[Misko Hevery](http://misko.hevery.com/about/)の[root of problemという記事](http://misko.hevery.com/2008/08/25/root-cause-of-singletons/)が参考になるでしょう。
 
-**Bad:**
+**悪い例:**
 
 ```php
 class DBConnection
@@ -918,7 +918,7 @@ class DBConnection
 $singleton = DBConnection::getInstance();
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 class DBConnection
@@ -932,19 +932,19 @@ class DBConnection
 }
 ```
 
-Create instance of `DBConnection` class and configure it with [DSN](http://php.net/manual/en/pdo.construct.php#refsect1-pdo.construct-parameters).
+`DBConnection`クラスのインスタンスを作成し、[DSN](https://www.php.net/manual/ja/pdo.construct.php#refsect1-pdo.construct-parameters)で構成します。
 
 ```php
 $connection = new DBConnection($dsn);
 ```
 
-And now you must use instance of `DBConnection` in your application.
+そして今、アプリケーションで`DBConnection`のインスタンスを使わなければなりません。
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Encapsulate conditionals
+### 条件文をカプセル化する
 
-**Bad:**
+**悪い例:**
 
 ```php
 if ($article->state === 'published') {
@@ -952,7 +952,7 @@ if ($article->state === 'published') {
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 if ($article->isPublished()) {
@@ -960,11 +960,11 @@ if ($article->isPublished()) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Avoid negative conditionals
+### 否定の条件文を避ける
 
-**Bad:**
+**悪い例:**
 
 ```php
 function isDOMNodeNotPresent(DOMNode $node): bool
@@ -977,7 +977,7 @@ if (! isDOMNodeNotPresent($node)) {
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 function isDOMNodePresent(DOMNode $node): bool
@@ -990,20 +990,18 @@ if (isDOMNodePresent($node)) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Avoid conditionals
+### 条件文を避ける
 
-This seems like an impossible task. Upon first hearing this, most people say,
-"how am I supposed to do anything without an `if` statement?" The answer is that
-you can use polymorphism to achieve the same task in many cases. The second
-question is usually, "well that's great but why would I want to do that?" The
-answer is a previous clean code concept we learned: a function should only do
-one thing. When you have classes and functions that have `if` statements, you
-are telling your user that your function does more than one thing. Remember,
-just do one thing.
+これは、不可能なことのように思われます。これを最初に聞いた時、ほとんどの人はこう言います。
+「`if`ステートメントなしで、どうすればいいんだ？」と。
+答えは、多くのケースで、ポリモーフィズムを使用して同じタスクを達成することができる、ということです。
 
-**Bad:**
+二番目の質問は通常、「なぜポリモーフィズムを使用する必要があるんだ？」です。
+答えは、すでに学んだ以前のclean codeの概念の、関数は1つのことを実行すべき、というものです。`if`ステートメントを持つクラスと関数がある場合、関数が複数のことを実行することをユーザーに伝えます。ただ1つのことだけ、ということを覚えておいてください。
+
+**悪い例:**
 
 ```php
 class Airplane
@@ -1024,7 +1022,7 @@ class Airplane
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 interface Airplane
@@ -1065,16 +1063,15 @@ class Cessna implements Airplane
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Avoid type-checking (part 1)
+### 型チェックを避ける (パート1)
 
-PHP is untyped, which means your functions can take any type of argument.
-Sometimes you are bitten by this freedom and it becomes tempting to do
-type-checking in your functions. There are many ways to avoid having to do this.
-The first thing to consider is consistent APIs.
+PHPは型指定されていません。そのため、関数は任意の型の引数をとることができます。
+あらゆる型の可能性があることから、型のチェックを関数内で行いたくなることがあります。
+これをさける方法は多くあります。まず考慮すべきことは、一貫性のあるAPIです。
 
-**Bad:**
+**悪い例:**
 
 ```php
 function travelToTexas($vehicle): void
@@ -1087,7 +1084,7 @@ function travelToTexas($vehicle): void
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 function travelToTexas(Vehicle $vehicle): void
@@ -1096,21 +1093,17 @@ function travelToTexas(Vehicle $vehicle): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Avoid type-checking (part 2)
+### 型チェックを避ける (パート2)
 
-If you are working with basic primitive values like strings, integers, and arrays,
-and you use PHP 7+ and you can't use polymorphism but you still feel the need to
-type-check, you should consider
-[type declaration](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
-or strict mode. It provides you with static typing on top of standard PHP syntax.
-The problem with manually type-checking is that doing it will require so much
-extra verbiage that the faux "type-safety" you get doesn't make up for the lost
-readability. Keep your PHP clean, write good tests, and have good code reviews.
-Otherwise, do all of that but with PHP strict type declaration or strict mode.
+文字列や整数、配列などの基本的なプリミティブを使用していて、PHP7以降を使用していて、ポリモーフィズムを使用できないという場合においても、
+型チェックが必要であれば、[型宣言](https://www.php.net/manual/ja/language.types.declarations.php)やstrictモードを検討してみてください。
+それにより、標準のPHP構文に加えて、静的型付けをを行えます。
+手動での型チェックの問題は、可読性の低下を補わない偽物の「型安全」のために多くの余分なコードが必要になることです。
+PHPをクリーンに保ち、優れたテストを作成し、優れたコードレビューを行いましょう。そうでなければ、PHPの厳密な型宣言やstrictモードを使用してすべてのコードを実行しましょう。
 
-**Bad:**
+**悪い例:**
 
 ```php
 function combine($val1, $val2): int
@@ -1123,7 +1116,7 @@ function combine($val1, $val2): int
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 function combine(int $val1, int $val2): int
@@ -1132,15 +1125,14 @@ function combine(int $val1, int $val2): int
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Remove dead code
+### 必要のないコードは取り除く
 
-Dead code is just as bad as duplicate code. There's no reason to keep it in
-your codebase. If it's not being called, get rid of it! It will still be safe
-in your version history if you still need it.
+実行されることのないコードは、重複しているコードと同じくらい悪いです。コードの中にそれをおいておく理由はありません。呼び出されない場合は、削除してください。
+それでも必要な場合には、バージョン履歴を利用しましょう。
 
-**Bad:**
+**悪い例:**
 
 ```php
 function oldRequestModule(string $url): void
@@ -1157,7 +1149,7 @@ $request = newRequestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 function requestModule(string $url): void
@@ -1169,28 +1161,26 @@ $request = requestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
 
-## Objects and Data Structures
+## オブジェクトとデータ構造
 
-### Use object encapsulation
+### オブジェクトのカプセル化を使用する
 
-In PHP you can set `public`, `protected` and `private` keywords for methods.
-Using it, you can control properties modification on an object.
+PHPのメソッドには、`public`、 `protected`、`private`のキーワードを設定することができます。
+これを使用して、オブジェクトのプロパティの変更を制御できます。
 
-* When you want to do more beyond getting an object property, you don't have
-to look up and change every accessor in your codebase.
-* Makes adding validation simple when doing a `set`.
-* Encapsulates the internal representation.
-* Easy to add logging and error handling when getting and setting.
-* Inheriting this class, you can override default functionality.
-* You can lazy load your object's properties, let's say getting it from a
-server.
+* オブジェクトのプロパティを取得する以上のことをしたい場合には、コード内の全てのアクセサを検索し、変更する必要はありません。
+* `set`を実行するときに、検証を簡単に実行できます。
+* 内部表現をカプセル化します。
+* 取得および、設定時にログとエラー処理を簡単に追加できます。
+* このクラスを継承すると、デフォルトの機能をオーバーライドできます。
+* オブジェクトのプロパティを遅延ロードできます。例えば、サーバーからオブジェクトを取得できます。
 
-Additionally, this is part of [Open/Closed](#openclosed-principle-ocp) principle.
+さらに、これは[オープン・クローズド](#オープン・クローズドの原則-OCP)原則の一部です。
 
-**Bad:**
+**悪い例:**
 
 ```php
 class BankAccount
@@ -1204,7 +1194,7 @@ $bankAccount = new BankAccount();
 $bankAccount->balance -= 100;
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 class BankAccount
@@ -1230,7 +1220,7 @@ class BankAccount
         $this->balance += $amount;
     }
 
-    public function getBalance(): int
+    public function getBalance(): int
     {
         return $this->balance;
     }
@@ -1238,26 +1228,26 @@ class BankAccount
 
 $bankAccount = new BankAccount();
 
-// Buy shoes...
+// 靴を購入
 $bankAccount->withdraw($shoesPrice);
 
-// Get balance
+// 残高を取得
 $balance = $bankAccount->getBalance();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Make objects have private/protected members
+### private/protectedなメンバーを持つオブジェクトを作成する
 
-* `public` methods and properties are most dangerous for changes, because some outside code may easily rely on them and you can't control what code relies on them. **Modifications in class are dangerous for all users of class.**
-* `protected` modifier are as dangerous as public, because they are available in scope of any child class. This effectively means that difference between public and protected is only in access mechanism, but encapsulation guarantee remains the same. **Modifications in class are dangerous for all descendant classes.**
-* `private` modifier guarantees that code is **dangerous to modify only in boundaries of single class** (you are safe for modifications and you won't have [Jenga effect](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)).
+* `public`メソッドとプロパティは、変更にたいして最も危険です。なぜなら、外部のコードは簡単にそれらに依存する可能性があり、どのコードが依存するかを制御できないためです。
+* `protected`修飾子は、すべての子クラスのスコープで使用できるため、publicクラスと同じくらい危険です。これは事実上、publicとprotectedの違いは、アクセスメカニズムのみにあることを意味しますが、カプセル化の保証は同じままです。**クラスの変更は、すべての子孫クラスにとって危険です。**
+* `private`修飾子は、コードが**単一クラスの内部のみ変更する危険性**があることを保証します。(変更しても安全であり、[Jenga effect](http://www.urbandictionary.com/define.php?term=Jengaphobia&defid=2494196)はありません。)
 
-Therefore, use `private` by default and `public/protected` when you need to provide access for external classes.
+それゆえ、デフォルトでは`private`を使用し、外部のクラスへアクセスを提供する必要がある場合に`public/protected`を使用してください。
 
-For more information you can read the [blog post](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html) on this topic written by [Fabien Potencier](https://github.com/fabpot).
+詳細については、[Fabien Potencier](https://github.com/fabpot)によって書かれた[Pragmatism over Theory: Protected vs Private](http://fabien.potencier.org/pragmatism-over-theory-protected-vs-private.html)を読んでみてください。
 
-**Bad:**
+**悪い例:**
 
 ```php
 class Employee
@@ -1275,7 +1265,7 @@ $employee = new Employee('John Doe');
 echo 'Employee name: ' . $employee->name;
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 class Employee
@@ -1298,30 +1288,23 @@ $employee = new Employee('John Doe');
 echo 'Employee name: ' . $employee->getName();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-## Classes
+## クラス
 
-### Prefer composition over inheritance
+### 継承よりコンポジションを優先する
 
-As stated famously in [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
-you should prefer composition over inheritance where you can. There are lots of
-good reasons to use inheritance and lots of good reasons to use composition.
-The main point for this maxim is that if your mind instinctively goes for
-inheritance, try to think if composition could model your problem better. In some
-cases it can.
+Gang of Four(GOF)の[*デザインパターン*](https://en.wikipedia.org/wiki/Design_Patterns)で有名に述べられているように、
+可能な場合には、継承よりもコンポジションを優先する必要があります。継承を使用する正当な理由と、コンポジションを使用する正当な理由はたくさんあります。
+この格言の要点は、あなたの心が本能的に継承を使いたがっている場合に、コンポジションが問題をよりよくモデル化できないかを考えた方がよい、ということです。場合によっては、可能です。
 
-You might be wondering then, "when should I use inheritance?" It
-depends on your problem at hand, but this is a decent list of when inheritance
-makes more sense than composition:
+それなら「いつ継承を使うべきなのか？」と疑問に思われるかもしれません。これは、手元の問題によりますが、以下は継承がコンポジションよりも理にかなっている場合のリストです。
 
-1. Your inheritance represents an "is-a" relationship and not a "has-a"
-relationship (Human->Animal vs. User->UserDetails).
-2. You can reuse code from the base classes (Humans can move like all animals).
-3. You want to make global changes to derived classes by changing a base class.
-(Change the caloric expenditure of all animals when they move).
+1. 継承が、「has-a」関係ではなく、「is-a」関係を表している(Human->Animal vs. User->UserDetails)
+2. 基底クラスのコードを再利用できる(人間は、全ての動物と同じように動くことができる)
+3. 基底クラスを変更して、派生クラスにグローバルな変更を加えたい。(移動する全ての動物のカロリー消費量を変更する。)
 
-**Bad:**
+**悪い例:**
 
 ```php
 class Employee
@@ -1339,8 +1322,8 @@ class Employee
     // ...
 }
 
-// Bad because Employees "have" tax data.
-// EmployeeTaxData is not a type of Employee
+// 従業員がtaxDataを「持っている」ため悪い
+// EmployeeTaxDataはEmployeeの型ではない
 
 class EmployeeTaxData extends Employee
 {
@@ -1360,7 +1343,7 @@ class EmployeeTaxData extends Employee
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 class EmployeeTaxData
@@ -1401,28 +1384,22 @@ class Employee
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Avoid fluent interfaces
+### 流れるようなインターフェイスを避ける
 
-A [Fluent interface](https://en.wikipedia.org/wiki/Fluent_interface) is an object
-oriented API that aims to improve the readability of the source code by using
-[Method chaining](https://en.wikipedia.org/wiki/Method_chaining).
+[流れるようなインターフェイス](https://en.wikipedia.org/wiki/Fluent_interface)とは、[メソッドチェーン](https://en.wikipedia.org/wiki/Method_chaining)を用いて、ソースコードの可読性を高めることを目的としたオブジェクト指向APIのことです。
 
-While there can be some contexts, frequently builder objects, where this
-pattern reduces the verbosity of the code (for example the [PHPUnit Mock Builder](https://phpunit.de/manual/current/en/test-doubles.html)
-or the [Doctrine Query Builder](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/query-builder.html)),
-more often it comes at some costs:
+ビルダーオブジェクトのように、このパターンがコードの冗長性をへらす場合もありますが(例えば、[PHPUnit Mock Builder](https://phpunit.de/manual/current/en/test-doubles.html) や [Doctrine Query Builder](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/query-builder.html)などのように)、多くの場合には以下のような代償が必要になります。
 
-1. Breaks [Encapsulation](https://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29).
-2. Breaks [Decorators](https://en.wikipedia.org/wiki/Decorator_pattern).
-3. Is harder to [mock](https://en.wikipedia.org/wiki/Mock_object) in a test suite.
-4. Makes diffs of commits harder to read.
+1. [カブセル化](https://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%97%E3%82%BB%E3%83%AB%E5%8C%96)を壊す
+2. [デコレータ](https://ja.wikipedia.org/wiki/Decorator_%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3)を壊す
+3. テストスイートで[モック](https://ja.wikipedia.org/wiki/%E3%83%A2%E3%83%83%E3%82%AF%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88)するのは難しい
+4. コミットの差分が読みにくくなる
 
-For more information you can read the full [blog post](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
-on this topic written by [Marco Pivetta](https://github.com/Ocramius).
+詳細については、[Marco Pivetta](https://github.com/Ocramius)によって書かれた[fluent-interfaces-are-evil](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)を読んでみてください。
 
-**Bad:**
+**悪い例:**
 
 ```php
 class Car
@@ -1470,7 +1447,7 @@ $car = (new Car())
     ->dump();
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 class Car
@@ -1509,23 +1486,23 @@ $car->setModel('F-150');
 $car->dump();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Prefer final classes
+### finalクラスを優先する
 
-The `final` keyword should be used whenever possible:
+`final`キーワードは、可能な限り使用すべきです。
 
-1. It prevents an uncontrolled inheritance chain.
-2. It encourages [composition](#prefer-composition-over-inheritance).
-3. It encourages the [Single Responsibility Principle](#single-responsibility-principle-srp).
-4. It encourages developers to use your public methods instead of extending the class to get access to protected ones.
-5. It allows you to change your code without breaking applications that use your class.
+1. 制御されていない継承チェーンを防ぎます。
+2. [コンポジション](#継承よりコンポジションを優先する)を奨励します。
+3. [単一責任原則](#単一責任原則)を奨励します。
+4. 保護されたクラスにアクセスするためにクラスを拡張する代わりに、publicメソッドを使用することを奨励します。
+5. クラスを使用するアプリケーションを壊すことなく、コードを変更できます。
 
-The only condition is that your class should implement an interface and no other public methods are defined.
+唯一の条件は、クラスがインターフェイスを実装する必要があり、他のpublicメソッドが定義されていないことです。
 
-For more informations you can read [the blog post](https://ocramius.github.io/blog/when-to-declare-classes-final/) on this topic written by [Marco Pivetta (Ocramius)](https://ocramius.github.io/).
+詳細については、[Marco Pivetta (Ocramius)](https://ocramius.github.io/)によって書かれた[when-to-declare-classes-final](https://ocramius.github.io/blog/when-to-declare-classes-final/)を読んでみてください。
 
-**Bad:**
+**悪い例:**
 
 ```php
 final class Car
@@ -1547,7 +1524,7 @@ final class Car
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 interface Vehicle
@@ -1574,30 +1551,25 @@ final class Car implements Vehicle
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-## SOLID
+## SOLID原則
 
-**SOLID** is the mnemonic acronym introduced by Michael Feathers for the first five principles named by Robert Martin, which meant five basic principles of object-oriented programming and design.
+**SOLID**は、Robert Martinが名付けた5つの原則の頭文字をとって、Michael Feathersが提唱したニーモニックです。
 
- * [S: Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
- * [O: Open/Closed Principle (OCP)](#openclosed-principle-ocp)
- * [L: Liskov Substitution Principle (LSP)](#liskov-substitution-principle-lsp)
- * [I: Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
- * [D: Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
+ * [S: 単一責任原則(SRP)](#単一責任原則-SRP)
+ * [O: オープン・クローズドの原則(OCP)](#オープン・クローズドの原則-OCP)
+ * [L: リスコフの置換原則(LSP)](#リスコフの置換原則-LSP)
+ * [I: インターフェイス分離の原則(ISP)](#インターフェイス分離の原則-ISP)
+ * [D: 依存性逆転の原則(DIP)](#依存性逆転の原則-DIP)
 
-### Single Responsibility Principle (SRP)
+### 単一責任原則 (SRP)
 
-As stated in Clean Code, "There should never be more than one reason for a class
-to change". It's tempting to jam-pack a class with a lot of functionality, like
-when you can only take one suitcase on your flight. The issue with this is
-that your class won't be conceptually cohesive and it will give it many reasons
-to change. Minimizing the amount of times you need to change a class is important.
-It's important because if too much functionality is in one class and you modify a piece of it,
-it can be difficult to understand how that will affect other dependent modules in
-your codebase.
+クリーンコードで記載されているように、「クラスが変更される理由は複数あってはなりません」。飛行機でスーツケースを1つしか持って行けない時のように、クラスに多くの機能を詰め込みたくなるものです。
+この場合の問題点は、クラスが概念的にまとまらず、変更する理由をたくさん与えてしまうことです。クラスを変更する回数を最小限にすることが大切です。
+なぜなら、あまりに多くの機能が1つのクラスに入っていて、その一部を変更した場合、それがコード内の他の依存モジュールにどのような影響を与えるか理解し難くなるからです。
 
-**Bad:**
+**悪い例:**
 
 ```php
 class UserSettings
@@ -1623,7 +1595,7 @@ class UserSettings
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 class UserAuth
@@ -1662,16 +1634,14 @@ class UserSettings
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Open/Closed Principle (OCP)
+### オープン・クローズドの原則 (OCP)
 
-As stated by Bertrand Meyer, "software entities (classes, modules, functions,
-etc.) should be open for extension, but closed for modification." What does that
-mean though? This principle basically states that you should allow users to
-add new functionalities without changing existing code.
+Bertrand Meyerが述べているように、「ソフトウェアエンティティ(クラス、モジュール、関数など)は、拡張のためにオープンである必要がありますが、変更のためにクローズドである必要があります。」
+どういう意味でしょう。この原則は、基本的にユーザーに既存のコードを変更せずに新しい機能を追加できるようにする必要があることを示しています。
 
-**Bad:**
+**悪い例:**
 
 ```php
 abstract class Adapter
@@ -1736,7 +1706,7 @@ class HttpRequester
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 interface Adapter
@@ -1776,24 +1746,17 @@ class HttpRequester
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Liskov Substitution Principle (LSP)
+### リスコフの置換原則 (LSP)
 
-This is a scary term for a very simple concept. It's formally defined as "If S
-is a subtype of T, then objects of type T may be replaced with objects of type S
-(i.e., objects of type S may substitute objects of type T) without altering any
-of the desirable properties of that program (correctness, task performed,
-etc.)." That's an even scarier definition.
+これは、非常に単純な概念の恐ろしい単語です。正式には、「SがTのサブタイプであれば、T型のオブジェクトは、そのプログラムの望ましい特性（正しさ、実行されたタスクなど）を一切変更することなく、T型のオブジェクトをS型のオブジェクトで置き換え可能（すなわち、S型のオブジェクトがT型のオブジェクトの代わりになることがある）」という恐ろしい定義です。
 
-The best explanation for this is if you have a parent class and a child class,
-then the base class and child class can be used interchangeably without getting
-incorrect results. This might still be confusing, so let's take a look at the
-classic Square-Rectangle example. Mathematically, a square is a rectangle, but
-if you model it using the "is-a" relationship via inheritance, you quickly
-get into trouble.
+これについての最も良い説明は、親クラスと子クラスがあれば、親クラスと小クラスを入れ替わっても間違った結果にならない、というものです。これでもまだわかりにくいかもしれませんので、古典的な正方形と長方形の例を見てみましょう。
+数学的には正方形は長方形なのですが、継承による「is-a」の関係を使ってモデル化するとすぐに問題が生じます。
 
-**Bad:**
+
+**悪い例:**
 
 ```php
 class Rectangle
@@ -1847,13 +1810,12 @@ foreach ($rectangles as $rectangle) {
 }
 ```
 
-**Good:**
+**良い例:**
 
-The best way is separate the quadrangles and allocation of a more general subtype for both shapes.
+最良の方法は、四角形を分離し、両方の形状に対してより一般的なサブタイプを割り当てることです。
 
-Despite the apparent similarity of the square and the rectangle, they are different.
-A square has much in common with a rhombus, and a rectangle with a parallelogram, but they are not subtypes.
-A square, a rectangle, a rhombus and a parallelogram are separate shapes with their own properties, albeit similar.
+正方形と長方形の見かけの類似性にもかかわらず、それらは異なっています。正方形はひし形と多くの共通点があり、長方形には平方四辺形がありますが、これらはサブタイプではありません。
+正方形、長方形、ひし形、平行四辺形は、形は似ていますが、独自の特性をもつ別々の形状をしています。
 
 ```php
 interface Shape
@@ -1889,8 +1851,8 @@ class Square implements Shape
 
     public function getArea(): int
     {
-        return $this->length ** 2;
-    }
+        return $this->length ** 2;
+    }
 }
 
 function printArea(Shape $shape): void
@@ -1905,19 +1867,15 @@ foreach ($shapes as $shape) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Interface Segregation Principle (ISP)
+### インターフェイス分離の原則 (ISP)
 
-ISP states that "Clients should not be forced to depend upon interfaces that
-they do not use."
+ISPでは、「クライアントが使用しないインターフェースに依存ｎすることを強制されるべきではない」と述べています。
 
-A good example to look at that demonstrates this principle is for
-classes that require large settings objects. Not requiring clients to set up
-huge amounts of options is beneficial, because most of the time they won't need
-all of the settings. Making them optional helps prevent having a "fat interface".
+この原則を示す良い例として、大きな設定オブジェクトを必要とするクラスを見てみましょう。クライアントに膨大な量のオプションの設定を要求しないことは、ほとんどの場合、すべての設定を必要としないので有益です。オプションにすることで「太いインターフェース」を持つことを防ぐことができます。
 
-**Bad:**
+**悪い例:**
 
 ```php
 interface Employee
@@ -1954,9 +1912,10 @@ class RobotEmployee implements Employee
 }
 ```
 
-**Good:**
+**良い例:**
 
-Not every worker is an employee, but every employee is a worker.
+全ての労働者が従業員であるわけではなく、すべての従業員が労働者です。
+
 
 ```php
 interface Workable
@@ -1996,24 +1955,19 @@ class RobotEmployee implements Workable
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-### Dependency Inversion Principle (DIP)
+### 依存性逆転の原則 (DIP)
 
-This principle states two essential things:
-1. High-level modules should not depend on low-level modules. Both should
-depend on abstractions.
-2. Abstractions should not depend upon details. Details should depend on
-abstractions.
+この原則は、2つの本質的なことを述べています。
+1. 高位のモジュールは、低位のモジュールに低位のモジュールに依存すべきではありません。どちらも抽象化されたものに依存すべきです。
+2. 抽象化されたものは具体的なものに依存するべきではありません。具体的なものは、抽象化されたものに依存すべきです。
 
-This can be hard to understand at first, but if you've worked with PHP frameworks (like Symfony), you've seen an implementation of this principle in the form of Dependency
-Injection (DI). While they are not identical concepts, DIP keeps high-level
-modules from knowing the details of its low-level modules and setting them up.
-It can accomplish this through DI. A huge benefit of this is that it reduces
-the coupling between modules. Coupling is a very bad development pattern because
-it makes your code hard to refactor.
+最初は理解しにくいかもしれませんが、PHPフレームワーク(Symfonyなど)を使っている人であれば、この原則の実装を、依存性注入(DI)という形で見たことがあると思います。
+両者は同一の概念ではありませんが、DIPは高レベルのモジュールがその低レベルのモジュールの詳細を知り、設定することを防ぎます。それは、DIによって実現できます。
+これによる大きな利点は、モジュール間の結合を減らすことができることです。結合はコードのリファクタリングが難しくなるため、非常に悪い開発パターンです。
 
-**Bad:**
+**悪い例:**
 
 ```php
 class Employee
@@ -2048,7 +2002,7 @@ class Manager
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 interface Employee
@@ -2088,34 +2042,21 @@ class Manager
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-## Don’t repeat yourself (DRY)
+## DRY原則 (DRY)
 
-Try to observe the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle.
+[DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)の原則を守るようにしてください。
+コードの重複を極力避けてください。重複したコードは、ロジックを変更する必要がある場合に、変更する場所が複数になるので好ましくありません。
 
-Do your absolute best to avoid duplicate code. Duplicate code is bad because
-it means that there's more than one place to alter something if you need to
-change some logic.
+例えば、あなたがレストランを経営していて、トマト、タマネギ、ニンニク、スパイスなどの在庫を管理しているとします。もし、複数の在庫リストがあれば、トマトを使った料理を提供するときに、すべてのリストを更新しなければなりません。リストが1つしかない場合は、更新する場所は1つだけです。
 
-Imagine if you run a restaurant and you keep track of your inventory: all your
-tomatoes, onions, garlic, spices, etc. If you have multiple lists that
-you keep this on, then all have to be updated when you serve a dish with
-tomatoes in them. If you only have one list, there's only one place to update!
+コードが重複するのは、2つ以上の微妙に異なるコードを持っているからです。そして、その違いのために、ほとんど同じことをするのに2つ以上の別々の関数を用意しなければなりません。
+重複するコードを削除するということは、このような異なるものの集合をたった一つの関数／モジュール／クラスで扱えるような抽象化を作るということです。
 
-Often you have duplicate code because you have two or more slightly
-different things, that share a lot in common, but their differences force you
-to have two or more separate functions that do much of the same things. Removing
-duplicate code means creating an abstraction that can handle this set of different
-things with just one function/module/class.
+抽象化を正しく行うことは非常に重要です。そのためには、[クラス](#クラス)のセクションで説明したSOLIDの原則に従う必要があります。間違った抽象化は、重複したコードよりも悪いので注意が必要です。とはいえ、良い抽象化ができるのであれば、それを実行しましょう。そうでなければ、1つのことを変更するたびに、複数の場所を更新することになるでしょう。
 
-Getting the abstraction right is critical, that's why you should follow the
-SOLID principles laid out in the [Classes](#classes) section. Bad abstractions can be
-worse than duplicate code, so be careful! Having said this, if you can make
-a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself
-updating multiple places any time you want to change one thing.
-
-**Bad:**
+**悪い例:**
 
 ```php
 function showDeveloperList(array $developers): void
@@ -2143,7 +2084,7 @@ function showManagerList(array $managers): void
 }
 ```
 
-**Good:**
+**良い例:**
 
 ```php
 function showList(array $employees): void
@@ -2159,9 +2100,9 @@ function showList(array $employees): void
 }
 ```
 
-**Very good:**
+**より良い例:**
 
-It is better to use a compact version of the code.
+コンパクトにまとめるとより良いです。
 
 ```php
 function showList(array $employees): void
@@ -2172,11 +2113,11 @@ function showList(array $employees): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
 
-## Translations
+## 翻訳
 
-This is also available in other languages:
+他の言語での翻訳:
 
 * :cn: **Chinese:**
    * [php-cpm/clean-code-php](https://github.com/php-cpm/clean-code-php)
@@ -2204,4 +2145,4 @@ This is also available in other languages:
 * :egypt: **Arabic:**
    * [ahmedjoda/clean-code-php](https://github.com/ahmedjoda/clean-code-php)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆トップに戻る](#目次)**
