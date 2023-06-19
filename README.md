@@ -799,7 +799,7 @@ function createTempFile(string $name): void
 
 ```php
 // 次の関数によって参照されるグローバル変数
-// このname変数を医療する他の関数がある場合、これは配列になり、動作しな可能性があります。
+// このname変数を利用する他の関数がある場合、これは配列になり、動作しない可能性があります。
 $name = 'Ryan McDermott';
 
 function splitIntoFirstAndLastName(): void
